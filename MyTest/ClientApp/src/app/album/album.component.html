@@ -1,0 +1,45 @@
+<h1 id="tableLabel">Album Photos</h1>
+
+<p *ngIf="!photos"><img src="/assets/loading.gif" *ngIf="commentsLoading" /></p>
+
+<table class="table table-striped" aria-labelledby="tableLabel" *ngIf="photos">
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>Title</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let photo of photos">
+      <tr>
+        <td><img src="{{ photo.thumbnailUrl }}" alt="{{ photo.title }}" /></td>
+        <td>{{ photo.title }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-success"
+            (click)="loadComments(photo.id)"
+          >
+            View Comments
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" *ngIf="selectedPhoto === photo.id">
+          <img src="/assets/loading.gif" *ngIf="commentsLoading" />
+          <div *ngIf="!commentsLoading">
+            <h4 *ngIf="comments !== null && comments.length === 0">
+              No comments available!
+            </h4>
+            <div *ngFor="let comment of comments">
+              <div class="title">{{ comment.name }} ({{ comment.email }})</div>
+              <div>{{ comment.body }}</div>
+              <hr />
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

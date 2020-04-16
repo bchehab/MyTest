@@ -1,0 +1,25 @@
+<h1>Test App</h1>
+<hr />
+<div class="row">
+  <label for="albums">Select an album</label>
+  <select
+    class="albums-list"
+    name="albums"
+    id="albums"
+    [(ngModel)]="selectedAlbum"
+  >
+    <option *ngFor="let album of albums" [ngValue]="album.id">{{
+      album.title
+    }}</option>
+  </select>
+</div>
+<div class="row">
+  <button
+    type="button"
+    [disabled]="!selectedAlbum"
+    class="albums-btn btn btn-success"
+    (click)="loadAlbum()"
+  >
+    View Album
+  </button>
+</div>
