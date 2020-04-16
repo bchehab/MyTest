@@ -1,6 +1,7 @@
 import { Component, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: "album",
@@ -42,14 +43,16 @@ export class AlbumComponent {
         "https://jsonplaceholder.typicode.com/comments?postId=" +
           this.selectedPhoto
       )
+      .pipe(
+        finalize(() => {
+          this.commentsLoading = false;
+        })
+      )
       .subscribe(
         (result) => {
           this.comments = result;
         },
-        (error) => console.error(error),
-        (complete) => {
-          this.commentsLoading = false;
-        }
+        (error) => console.error(error)
       );
   }
 }
